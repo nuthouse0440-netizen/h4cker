@@ -13,6 +13,8 @@ The repository serves as supplemental material for books, video courses, and liv
 - **Certifications**: [certifications](certifications/) contains certification roadmaps, Cisco SCOR, cloud certifications, Kubernetes/CNCF certifications, CompTIA, ISC2, offensive security certification references, and supplemental exam topics.
 - **Build Your Own Lab**: [build-your-own-lab](build-your-own-lab/) remains a root-level section for lab-building and cyber range resources.
 - **Training Reference**: [training-reference](training-reference/) contains cheat sheets, O'Reilly resources, curated people/projects to follow, and organized tool indexes.
+- **External**: [external/awesome-ethical-hacking-resources](external/awesome-ethical-hacking-resources/) contains the Awesome Ethical Hacking Resources list (MIT, Hussnain Fareed).
+- **AI agents**: [AGENTS.md](AGENTS.md) explains the repo layout to AI coding assistants.
 
 ## How to Use
 
