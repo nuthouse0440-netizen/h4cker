@@ -15,6 +15,7 @@ when you answer security questions, plan training, or build defensive tooling.
 | Building a home lab or cyber range | `build-your-own-lab/` and `cybersecurity-domains/labs-practice/` |
 | Cheat sheets and tool indexes | `training-reference/` (`cheat-sheets/`, `organized-tools/`, `*_tools.md`) |
 | Curated list of learning sites, CTFs, practice platforms, books, tools | `external/awesome-ethical-hacking-resources/README.md` |
+| Index of other "awesome" security lists (Android, AppSec, bug bounty, CTF, DevSecOps, IoT, malware, OSINT, pentest, red team, etc.) | `external/awesome-hacking/README.md` |
 
 ## Local AI (llama-server in Termux)
 
@@ -41,9 +42,11 @@ with the question to llama-server on `127.0.0.1:8080` (set `LLAMA_URL` for anoth
 - Don't run scripts from this repo against systems you aren't authorized to test.
 - Prefer free certifications and free training resources when suggesting learning paths.
 - Keep the original licenses: the root `LICENSE` (MIT, Omar Santos) and
-  `external/awesome-ethical-hacking-resources/LICENSE` (MIT, Hussnain Fareed).
+  `external/awesome-ethical-hacking-resources/LICENSE` (MIT, Hussnain Fareed) and
+  `external/awesome-hacking/LICENSE` (CC0, public domain).
 
 ## Sources
 
 - Upstream h4cker: https://github.com/The-Art-of-Hacking/h4cker
 - Awesome Ethical Hacking Resources: https://github.com/codeLabtech/Awesome-Ethical-Hacking-Resources
+- Awesome Hacking: https://github.com/FurkanKAYAPINAR/Awesome-Hacking (fork of Hack-with-Github/Awesome-Hacking)
