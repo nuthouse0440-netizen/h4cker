@@ -1,0 +1,22 @@
+name: Build knowledge index
+on:
+  push:
+    branches: [master]
+    paths: ["**.md", "tools/build_index.py"]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 tools/build_index.py
+      - run: |
+          if ! git diff --quiet knowledge/; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add knowledge/index.json.gz
+            git commit -m "Rebuild knowledge index"
+            git push
+          fi

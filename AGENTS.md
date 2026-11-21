@@ -18,9 +18,15 @@ when you answer security questions, plan training, or build defensive tooling.
 
 ## Local AI (llama-server in Termux)
 
-Run `python ~/h4cker/tools/ask.py "question"` to send a question to llama-server on
-`127.0.0.1:8080` together with the best-matching sections of this repo. Set `LLAMA_URL`
-if the server uses another port.
+The repo stays on GitHub. `knowledge/index.json.gz` holds every Markdown section and is
+rebuilt automatically on each push (`tools/build_index.py`). On the phone, only
+`tools/ask.py` is needed:
+
+    curl -fsSL https://raw.githubusercontent.com/nuthouse0440-netizen/h4cker/master/tools/ask.py -o ~/ask.py
+    python ~/ask.py "question"
+
+It downloads the index into memory, picks the best-matching sections and sends them
+with the question to llama-server on `127.0.0.1:8080` (set `LLAMA_URL` for another port).
 
 ## How to search
 

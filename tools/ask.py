@@ -1,19 +1,26 @@
 #!/usr/bin/env python3
-"""Ask your local llama-server a question, answered from this repo.
+"""Ask your local llama-server a question, answered from this repo in the cloud.
 
-Searches the repo's Markdown files for the sections that best match the
-question, then sends them with the question to llama-server's
-OpenAI-compatible API on 127.0.0.1. Standard library only (Termux-friendly).
+The repo stays on GitHub. Each run downloads its knowledge index
+(knowledge/index.json.gz, ~1 MB) straight into memory, picks the sections that
+best match the question, and sends them with the question to llama-server's
+OpenAI-compatible API on 127.0.0.1. Nothing is saved on the phone.
+Standard library only (Termux-friendly).
+
+Install (the only file on the phone):
+    curl -fsSL https://raw.githubusercontent.com/nuthouse0440-netizen/h4cker/master/tools/ask.py -o ~/ask.py
 
 Usage:
-    python ~/h4cker/tools/ask.py "what are good free CTF sites?"
-    python ~/h4cker/tools/ask.py            # interactive mode
+    python ~/ask.py "what are good free CTF sites?"
+    python ~/ask.py            # interactive mode: downloads once, then ask away
 
 Settings (environment variables):
     LLAMA_URL   server address   (default http://127.0.0.1:8080)
+    KB_URL      knowledge index  (default: this repo on GitHub)
     ASK_TOP     sections to send (default 6)
     ASK_CHARS   max context characters (default 6000; lower it for small models)
 """
+import gzip
 import json
 import os
 import re
@@ -21,7 +28,8 @@ import sys
 import urllib.error
 import urllib.request
 
-REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+KB_URL = os.environ.get("KB_URL", "https://raw.githubusercontent.com/"
+                        "nuthouse0440-netizen/h4cker/master/knowledge/index.json.gz")
 URL = os.environ.get("LLAMA_URL", "http://127.0.0.1:8080").rstrip("/")
 TOP = int(os.environ.get("ASK_TOP", "6"))
 MAX_CHARS = int(os.environ.get("ASK_CHARS", "6000"))
@@ -34,25 +42,14 @@ def words(text):
 
 
 def load_sections():
-    """Split every Markdown file into sections at its headings."""
-    sections = []
-    for root, dirs, files in os.walk(REPO):
-        dirs[:] = [d for d in dirs if not d.startswith(".")]
-        for name in files:
-            if not name.lower().endswith(".md"):
-                continue
-            path = os.path.join(root, name)
-            try:
-                with open(path, encoding="utf-8", errors="ignore") as fh:
-                    text = fh.read()
-            except OSError:
-                continue
-            rel = os.path.relpath(path, REPO)
-            for part in re.split(r"\n(?=#{1,4} )", text):
-                part = part.strip()
-                if len(part) > 40:
-                    sections.append((rel, part[:3000]))
-    return sections
+    """Download the knowledge index from GitHub into memory."""
+    try:
+        with urllib.request.urlopen(KB_URL, timeout=120) as resp:
+            raw = resp.read()
+    except urllib.error.URLError as exc:
+        sys.exit("Couldn't download the knowledge index from GitHub (%s).\n"
+                 "Check your internet connection." % exc)
+    return [tuple(x) for x in json.loads(gzip.decompress(raw).decode("utf-8"))]
 
 
 def best_sections(question, sections):
