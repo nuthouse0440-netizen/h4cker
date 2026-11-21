@@ -16,6 +16,12 @@ when you answer security questions, plan training, or build defensive tooling.
 | Cheat sheets and tool indexes | `training-reference/` (`cheat-sheets/`, `organized-tools/`, `*_tools.md`) |
 | Curated list of learning sites, CTFs, practice platforms, books, tools | `external/awesome-ethical-hacking-resources/README.md` |
 
+## Local AI (llama-server in Termux)
+
+Run `python ~/h4cker/tools/ask.py "question"` to send a question to llama-server on
+`127.0.0.1:8080` together with the best-matching sections of this repo. Set `LLAMA_URL`
+if the server uses another port.
+
 ## How to search
 
 - Every section has a `README.md` landing page. Read it before you open individual files.
